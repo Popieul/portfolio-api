@@ -2,7 +2,7 @@
 
 Backend Spring Boot pour la génération de CV PDF professionnels avec OpenHTMLtoPDF.
 
-## 🚀 Démarrage Rapide
+##  Démarrage Rapide
 
 ### Prérequis
 - Java 17+
@@ -63,7 +63,7 @@ Génère un CV PDF à partir des données du profil et des expériences.
 - Content-Disposition: `attachment; filename="CV_Prenom_Nom_2025-12-11.pdf"`
 - Body: PDF binary
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 src/main/java/com/portfolio/
@@ -85,7 +85,7 @@ src/main/resources/
     └── cv-template.html               # CV HTML template (Thymeleaf)
 ```
 
-## 🎨 Template CV
+##  Template CV
 
 Le template HTML utilise:
 - **Thymeleaf** pour le rendu dynamique
@@ -118,7 +118,7 @@ Pour modifier, éditer `CorsConfig.java`.
 - **OpenHTMLtoPDF 1.0.10** - HTML to PDF conversion
 - **Lombok** - Reduce boilerplate
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Le PDF ne se génère pas
 - Vérifier que le backend est démarré (port 8080)
@@ -147,7 +147,7 @@ Le CSS est inline dans le template pour faciliter la conversion PDF.
 2. Mettre à jour le template HTML
 3. Redémarrer le serveur
 
-## 🚀 Déploiement
+##  Déploiement
 
 ### Build JAR
 
