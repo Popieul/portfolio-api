@@ -37,18 +37,18 @@ Génère un CV PDF à partir des données du profil et des expériences.
 ```json
 {
   "profile": {
-    "firstName": "Clément",
-    "lastName": "Popieul",
+    "firstName": "Prénom",
+    "lastName": "Nom",
     "title": "Développeur Full-Stack",
     "photoUrl": "data:image/jpeg;base64,...",
-    "email": "clement.popieul@gmail.com",
-    "phone": "06 12 34 56 78",
+    "email": "email@gmail.com",
+    "phone": "06 00 00 00 00",
     ...
   },
   "experiences": [
     {
       "title": "Développeur Full-Stack",
-      "company": "Entreprise",
+      "company": "ExempleEntreprise",
       "startDate": "2023-01",
       "endDate": "Présent",
       "description": "...",
