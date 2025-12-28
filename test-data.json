@@ -1,0 +1,56 @@
+{
+    "profile": {
+        "firstName": "Jean",
+        "lastName": "Dupont",
+        "title": "Architecte Logiciel Senior",
+        "email": "jean.dupont@tech-mail.com",
+        "phone": "+33 6 12 34 56 78",
+        "city": "Lyon",
+        "postalCode": "69000",
+        "summary": "Expert en architecture micro-services avec 10 ans d'expérience. Passionné par le Clean Code et la transmission de connaissances.",
+        "linkedIn": "linkedin.com/in/jdupont",
+        "portfolio": "github.com/jdupont",
+        "technologies": [
+            "Java",
+            "Spring Boot",
+            "Angular",
+            "Docker",
+            "Kubernetes",
+            "AWS"
+        ]
+    },
+    "experiences": [
+        {
+            "id": "1",
+            "title": "Lead Developer Java/Angular",
+            "company": "Tech Solutions",
+            "location": "Paris",
+            "startDate": "2020-01",
+            "endDate": null,
+            "description": "Direction technique d'une équipe de 8 développeurs. Migration d'un monolithe vers une architecture micro-services.",
+            "technologies": [
+                "Java 17",
+                "Spring Boot 3",
+                "Angular 16",
+                "Kafka",
+                "PostgreSQL"
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Développeur Full Stack",
+            "company": "WebAgency",
+            "location": "Lyon",
+            "startDate": "2017-09",
+            "endDate": "2019-12",
+            "description": "Développement de plateformes e-commerce sur mesure. Mise en place de pipelines CI/CD.",
+            "technologies": [
+                "Java 8",
+                "Spring MVC",
+                "Angular 8",
+                "Jenkins",
+                "MySQL"
+            ]
+        }
+    ]
+}

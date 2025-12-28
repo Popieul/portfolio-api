@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CV</title>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.5;
+            color: #334155;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            -fs-pdf-font-embed: embed;
+            -fs-pdf-font-encoding: Identity-H;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            display: flex;
+            background: white;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 78mm;
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 15mm 8mm 10mm 8mm;
+            flex-shrink: 0;
+            font-size: 9pt;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 15mm 12mm 10mm 12mm;
+            background-color: #ffffff;
+            width: 132mm;
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .name-title {
+            font-size: 26pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5mm;
+            color: #0f172a;
+            line-height: 1.1;
+            margin-bottom: 3mm;
+        }
+
+        .name-highlight {
+            color: #4f46e5;
+        }
+
+        .job-title {
+            font-size: 13pt;
+            font-weight: 500;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 6mm;
+        }
+
+        .section-title {
+            font-size: 12pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #0f172a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 2mm;
+            margin-bottom: 6mm;
+            margin-top: 2mm;
+        }
+
+        .profile-pic {
+            width: 45mm;
+            height: 45mm;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #312e81;
+            display: block;
+            margin: 0 auto 10mm auto;
+        }
+
+        .initials-pic {
+            width: 45mm;
+            height: 45mm;
+            border-radius: 50%;
+            background: #312e81;
+            color: white;
+            font-size: 24pt;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10mm auto;
+            border: 4px solid #4338ca;
+        }
+
+        .sb-section {
+            margin-bottom: 10mm;
+        }
+
+        .sb-title {
+            font-size: 11pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #818cf8;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 2mm;
+            margin-bottom: 4mm;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3mm;
+            color: #e2e8f0;
+        }
+
+        .contact-icon {
+            width: 5mm;
+            margin-right: 3mm;
+            color: #818cf8;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5mm 3mm;
+            border-radius: 4px;
+            margin-right: 1.5mm;
+            margin-bottom: 2mm;
+            font-size: 8.5pt;
+            border: 1px solid #334155;
+        }
+
+        .summary-box {
+            background: #f8fafc;
+            border-left: 4px solid #4f46e5;
+            padding: 5mm;
+            margin-bottom: 10mm;
+            font-style: italic;
+            color: #475569;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .exp-item {
+            margin-bottom: 8mm;
+            position: relative;
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1.5mm;
+        }
+
+        .exp-role {
+            font-size: 12pt;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .exp-company {
+            font-size: 10pt;
+            font-weight: 600;
+            color: #4f46e5;
+            margin-bottom: 2mm;
+        }
+
+        .exp-date-badge {
+            font-size: 8pt;
+            font-weight: 700;
+            background: #f1f5f9;
+            color: #64748b;
+            padding: 1mm 3mm;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        .exp-desc {
+            color: #334155;
+            margin-bottom: 3mm;
+            text-align: justify;
+        }
+
+        .tech-stack-row {
+            margin-top: 2mm;
+        }
+
+        .tech-pill {
+            display: inline-block;
+            font-size: 7.5pt;
+            color: #4f46e5;
+            background: rgba(79, 70, 229, 0.08);
+            padding: 0.5mm 2mm;
+            border-radius: 3px;
+            margin-right: 1mm;
+            font-weight: 600;
+        }
+
+        .timeline-container {
+            border-left: 2px solid #e2e8f0;
+            padding-left: 6mm;
+            margin-left: 1mm;
+        }
+
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -8.5mm;
+            top: 1.5mm;
+            width: 3mm;
+            height: 3mm;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid #4f46e5;
+        }
+
+        .footer {
+            margin-top: 10mm;
+            padding-top: 5mm;
+            border-top: 1px dashed #cbd5e1;
+            text-align: center;
+            font-size: 8pt;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+<div class="page">
+
+    <div class="sidebar">
+
+        <div th:if="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}">
+            <img th:src="${profile.photoUrl}" class="profile-pic" />
+        </div>
+
+        <div th:unless="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}">
+            <div class="initials-pic"
+                 th:text="${#strings.escapeXml(
+                    (profile.firstName != null ? profile.firstName.substring(0,1) : '') +
+                    (profile.lastName != null ? profile.lastName.substring(0,1) : '')
+                 )}">
+                ID
+            </div>
+        </div>
+
+        <div class="sb-section">
+            <div class="sb-title">Contact</div>
+
+            <div class="contact-row" th:if="${profile.email}">
+                <span class="contact-icon">@</span>
+                <span th:text="${#strings.escapeXml(profile.email)}">email</span>
+            </div>
+
+            <div class="contact-row" th:if="${profile.phone}">
+                <span class="contact-icon">T</span>
+                <span th:text="${#strings.escapeXml(profile.phone)}">phone</span>
+            </div>
+
+            <div class="contact-row" th:if="${profile.city}">
+                <span class="contact-icon">L</span>
+                <span th:text="${#strings.escapeXml(profile.city)}">city</span>
+            </div>
+
+            <div class="contact-row" th:if="${profile.linkedIn}">
+                <span class="contact-icon">In</span>
+                <span th:text="${#strings.escapeXml(profile.linkedIn)}">linkedin</span>
+            </div>
+
+            <div class="contact-row" th:if="${profile.portfolio}">
+                <span class="contact-icon">W</span>
+                <span th:text="${#strings.escapeXml(profile.portfolio)}">web</span>
+            </div>
+        </div>
+
+        <div class="sb-section">
+            <div class="sb-title">Compétences</div>
+            <div th:if="${profile.technologies}">
+                <span th:each="tech : ${profile.technologies}"
+                      class="skill-tag"
+                      th:text="${#strings.escapeXml(tech)}">Java</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="main-content">
+
+        <div class="name-title">
+            <span th:text="${#strings.escapeXml(profile.firstName)}">Prénom</span>
+            <span class="name-highlight"
+                  th:text="${#strings.escapeXml(profile.lastName)}">Nom</span>
+        </div>
+
+        <div class="job-title"
+             th:text="${#strings.escapeXml(profile.title)}">
+            Développeur Full Stack
+        </div>
+
+        <div class="summary-box"
+             th:text="${#strings.escapeXml(profile.summary)}">
+            Résumé professionnel...
+        </div>
+
+        <h2 class="section-title">Expériences Professionnelles</h2>
+
+        <div class="timeline-container">
+            <div th:each="exp : ${experiences}" class="exp-item">
+
+                <div class="exp-header">
+                    <span class="exp-role"
+                          th:text="${#strings.escapeXml(exp.title)}">Role</span>
+
+                    <span class="exp-date-badge">
+                        <span th:text="${#strings.escapeXml(exp.startDate)}">2020</span>
+                        <span th:if="${exp.endDate}">
+                            - <span th:text="${#strings.escapeXml(exp.endDate)}">2022</span>
+                        </span>
+                        <span th:unless="${exp.endDate}"> - Présent</span>
+                    </span>
+                </div>
+
+                <div class="exp-company"
+                     th:text="${#strings.escapeXml(exp.company)}">Entreprise</div>
+
+                <div class="exp-desc"
+                     th:text="${#strings.escapeXml(exp.description)}">
+                    Description...
+                </div>
+
+                <div class="tech-stack-row" th:if="${exp.technologies}">
+                    <span th:each="t : ${exp.technologies}"
+                          class="tech-pill"
+                          th:text="${#strings.escapeXml(t)}">#Tech</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            CV généré automatiquement par Portfolio App •
+            <span th:text="${#strings.escapeXml(#temporals.format(T(java.time.LocalDate).now(), 'dd MMM yyyy'))}">
+                Date
+            </span>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
