@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8" />
@@ -32,28 +31,34 @@
         .page {
             width: 210mm;
             min-height: 297mm;
-            display: flex;
+            display: table;
+            table-layout: fixed;
             background: white;
             overflow: hidden;
         }
 
         .sidebar {
-            width: 78mm;
+            display: table-cell;
+            vertical-align: top;
+            width: 60mm;
             background-color: #0f172a;
             color: #f8fafc;
-            padding: 15mm 8mm 10mm 8mm;
-            flex-shrink: 0;
+            padding: 15mm 6mm 10mm 6mm;
             font-size: 9pt;
         }
 
         .main-content {
-            flex-grow: 1;
+            display: table-cell;
+            vertical-align: top;
+            width: 150mm;
             padding: 15mm 12mm 10mm 12mm;
             background-color: #ffffff;
-            width: 132mm;
+            page-break-inside: auto;
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             margin: 0;
             padding: 0;
         }
@@ -97,29 +102,33 @@
             width: 45mm;
             height: 45mm;
             border-radius: 50%;
-            object-fit: cover;
             border: 4px solid #312e81;
             display: block;
             margin: 0 auto 10mm auto;
         }
 
+        .initials-pic-wrapper {
+            text-align: center;
+            margin-bottom: 10mm;
+        }
+
         .initials-pic {
+            display: inline-block;
             width: 45mm;
             height: 45mm;
+            line-height: 45mm;
             border-radius: 50%;
             background: #312e81;
             color: white;
             font-size: 24pt;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10mm auto;
+            text-align: center;
             border: 4px solid #4338ca;
         }
 
         .sb-section {
             margin-bottom: 10mm;
+            page-break-inside: avoid;
         }
 
         .sb-title {
@@ -134,18 +143,29 @@
         }
 
         .contact-row {
-            display: flex;
-            align-items: center;
             margin-bottom: 3mm;
             color: #e2e8f0;
         }
 
+        .contact-row::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
         .contact-icon {
+            display: inline-block;
             width: 5mm;
             margin-right: 3mm;
             color: #818cf8;
             text-align: center;
             font-weight: bold;
+            vertical-align: middle;
+        }
+
+        .contact-text {
+            display: inline-block;
+            vertical-align: middle;
         }
 
         .skill-tag {
@@ -168,24 +188,30 @@
             font-style: italic;
             color: #475569;
             border-radius: 0 4px 4px 0;
+            page-break-inside: avoid;
         }
 
         .exp-item {
             margin-bottom: 8mm;
             position: relative;
+            page-break-inside: avoid;
         }
 
         .exp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
             margin-bottom: 1.5mm;
+        }
+
+        .exp-header::after {
+            content: "";
+            display: block;
+            clear: both;
         }
 
         .exp-role {
             font-size: 12pt;
             font-weight: 700;
             color: #1e293b;
+            display: inline-block;
         }
 
         .exp-company {
@@ -196,6 +222,7 @@
         }
 
         .exp-date-badge {
+            float: right;
             font-size: 8pt;
             font-weight: 700;
             background: #f1f5f9;
@@ -229,13 +256,13 @@
         .timeline-container {
             border-left: 2px solid #e2e8f0;
             padding-left: 6mm;
-            margin-left: 1mm;
+            margin-left: 0;
         }
 
         .exp-item::before {
             content: '';
             position: absolute;
-            left: -8.5mm;
+            left: -7mm;
             top: 1.5mm;
             width: 3mm;
             height: 3mm;
@@ -256,125 +283,118 @@
 </head>
 
 <body>
-<div class="page">
+    <div class="page">
 
-    <div class="sidebar">
+        <div class="sidebar">
 
-        <div th:if="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}">
-            <img th:src="${profile.photoUrl}" class="profile-pic" />
-        </div>
-
-        <div th:unless="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}">
-            <div class="initials-pic"
-                 th:text="${#strings.escapeXml(
-                    (profile.firstName != null ? profile.firstName.substring(0,1) : '') +
-                    (profile.lastName != null ? profile.lastName.substring(0,1) : '')
-                 )}">
-                ID
-            </div>
-        </div>
-
-        <div class="sb-section">
-            <div class="sb-title">Contact</div>
-
-            <div class="contact-row" th:if="${profile.email}">
-                <span class="contact-icon">@</span>
-                <span th:text="${#strings.escapeXml(profile.email)}">email</span>
+            <div th:if="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}">
+                <img th:src="${profile.photoUrl}" class="profile-pic" />
             </div>
 
-            <div class="contact-row" th:if="${profile.phone}">
-                <span class="contact-icon">T</span>
-                <span th:text="${#strings.escapeXml(profile.phone)}">phone</span>
+            <div th:unless="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}">
+                <div class="initials-pic-wrapper">
+                    <div class="initials-pic" th:text="${#strings.escapeXml(
+                        (profile.firstName != null ? profile.firstName.substring(0,1) : '') +
+                        (profile.lastName != null ? profile.lastName.substring(0,1) : '')
+                     )}">
+                        ID
+                    </div>
+                </div>
             </div>
 
-            <div class="contact-row" th:if="${profile.city}">
-                <span class="contact-icon">L</span>
-                <span th:text="${#strings.escapeXml(profile.city)}">city</span>
+            <div class="sb-section">
+                <div class="sb-title">Contact</div>
+
+                <div class="contact-row" th:if="${profile.email}">
+                    <span class="contact-icon">@</span>
+                    <span class="contact-text" th:text="${#strings.escapeXml(profile.email)}">email</span>
+                </div>
+
+                <div class="contact-row" th:if="${profile.phone}">
+                    <span class="contact-icon">T</span>
+                    <span class="contact-text" th:text="${#strings.escapeXml(profile.phone)}">phone</span>
+                </div>
+
+                <div class="contact-row" th:if="${profile.city}">
+                    <span class="contact-icon">L</span>
+                    <span class="contact-text" th:text="${#strings.escapeXml(profile.city)}">city</span>
+                </div>
+
+                <div class="contact-row" th:if="${profile.linkedIn}">
+                    <span class="contact-icon">In</span>
+                    <span class="contact-text" th:text="${#strings.escapeXml(profile.linkedIn)}">linkedin</span>
+                </div>
+
+                <div class="contact-row" th:if="${profile.portfolio}">
+                    <span class="contact-icon">W</span>
+                    <span class="contact-text" th:text="${#strings.escapeXml(profile.portfolio)}">web</span>
+                </div>
             </div>
 
-            <div class="contact-row" th:if="${profile.linkedIn}">
-                <span class="contact-icon">In</span>
-                <span th:text="${#strings.escapeXml(profile.linkedIn)}">linkedin</span>
+            <div class="sb-section">
+                <div class="sb-title">Compétences</div>
+                <div th:if="${profile.technologies}">
+                    <span th:each="tech : ${profile.technologies}" class="skill-tag"
+                        th:text="${#strings.escapeXml(tech)}">Java</span>
+                </div>
             </div>
 
-            <div class="contact-row" th:if="${profile.portfolio}">
-                <span class="contact-icon">W</span>
-                <span th:text="${#strings.escapeXml(profile.portfolio)}">web</span>
+        </div>
+
+        <div class="main-content">
+
+            <div class="name-title">
+                <span th:text="${#strings.escapeXml(profile.firstName)}">Prénom</span>
+                <span class="name-highlight" th:text="${#strings.escapeXml(profile.lastName)}">Nom</span>
             </div>
-        </div>
 
-        <div class="sb-section">
-            <div class="sb-title">Compétences</div>
-            <div th:if="${profile.technologies}">
-                <span th:each="tech : ${profile.technologies}"
-                      class="skill-tag"
-                      th:text="${#strings.escapeXml(tech)}">Java</span>
+            <div class="job-title" th:text="${#strings.escapeXml(profile.title)}">
+                Développeur Full Stack
             </div>
-        </div>
 
-    </div>
+            <div class="summary-box" th:text="${#strings.escapeXml(profile.summary)}">
+                Résumé professionnel...
+            </div>
 
-    <div class="main-content">
+            <h2 class="section-title">Expériences Professionnelles</h2>
 
-        <div class="name-title">
-            <span th:text="${#strings.escapeXml(profile.firstName)}">Prénom</span>
-            <span class="name-highlight"
-                  th:text="${#strings.escapeXml(profile.lastName)}">Nom</span>
-        </div>
+            <div class="timeline-container">
+                <div th:each="exp : ${experiences}" class="exp-item">
 
-        <div class="job-title"
-             th:text="${#strings.escapeXml(profile.title)}">
-            Développeur Full Stack
-        </div>
-
-        <div class="summary-box"
-             th:text="${#strings.escapeXml(profile.summary)}">
-            Résumé professionnel...
-        </div>
-
-        <h2 class="section-title">Expériences Professionnelles</h2>
-
-        <div class="timeline-container">
-            <div th:each="exp : ${experiences}" class="exp-item">
-
-                <div class="exp-header">
-                    <span class="exp-role"
-                          th:text="${#strings.escapeXml(exp.title)}">Role</span>
-
-                    <span class="exp-date-badge">
-                        <span th:text="${#strings.escapeXml(exp.startDate)}">2020</span>
-                        <span th:if="${exp.endDate}">
-                            - <span th:text="${#strings.escapeXml(exp.endDate)}">2022</span>
+                    <div class="exp-header">
+                        <span class="exp-date-badge">
+                            <span th:text="${#strings.escapeXml(exp.startDate)}">2020</span>
+                            <span th:if="${exp.endDate}">
+                                - <span th:text="${#strings.escapeXml(exp.endDate)}">2022</span>
+                            </span>
+                            <span th:unless="${exp.endDate}"> - Présent</span>
                         </span>
-                        <span th:unless="${exp.endDate}"> - Présent</span>
-                    </span>
+                        <span class="exp-role" th:text="${#strings.escapeXml(exp.title)}">Role</span>
+                    </div>
+
+                    <div class="exp-company" th:text="${#strings.escapeXml(exp.company)}">Entreprise</div>
+
+                    <div class="exp-desc" th:text="${#strings.escapeXml(exp.description)}">
+                        Description...
+                    </div>
+
+                    <div class="tech-stack-row" th:if="${exp.technologies}">
+                        <span th:each="t : ${exp.technologies}" class="tech-pill"
+                            th:text="${#strings.escapeXml(t)}">#Tech</span>
+                    </div>
+
                 </div>
-
-                <div class="exp-company"
-                     th:text="${#strings.escapeXml(exp.company)}">Entreprise</div>
-
-                <div class="exp-desc"
-                     th:text="${#strings.escapeXml(exp.description)}">
-                    Description...
-                </div>
-
-                <div class="tech-stack-row" th:if="${exp.technologies}">
-                    <span th:each="t : ${exp.technologies}"
-                          class="tech-pill"
-                          th:text="${#strings.escapeXml(t)}">#Tech</span>
-                </div>
-
             </div>
-        </div>
 
-        <div class="footer">
-            CV généré automatiquement par Portfolio App •
-            <span th:text="${#strings.escapeXml(#temporals.format(T(java.time.LocalDate).now(), 'dd MMM yyyy'))}">
-                Date
-            </span>
-        </div>
+            <div class="footer">
+                CV généré automatiquement par Portfolio App •
+                <span th:text="${#strings.escapeXml(#temporals.format(T(java.time.LocalDate).now(), 'dd MMM yyyy'))}">
+                    Date
+                </span>
+            </div>
 
+        </div>
     </div>
-</div>
 </body>
+
 </html>
