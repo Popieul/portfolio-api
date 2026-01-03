@@ -180,8 +180,8 @@
         .contact-list {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 3mm;
+            align-items: flex-start;
+            gap: 2.5mm;
             width: 100%;
         }
 
@@ -189,24 +189,25 @@
             color: #e2e8f0;
             display: inline-flex;
             align-items: center;
-            gap: 2mm;
-            justify-content: center;
-            text-align: center;
-            width: auto;
+            gap: 2.5mm;
+            justify-content: flex-start;
+            text-align: left;
+            width: 100%;
+            line-height: 1.35;
         }
 
         .contact-icon {
-            width: 4.5mm;
-            height: 4.5mm;
+            width: 5mm;
+            height: 5mm;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             vertical-align: middle;
-            color: #22d3ee;
-            background: rgba(14, 165, 233, 0.12);
-            border: 1px solid rgba(14, 165, 233, 0.35);
+            color: #a5b4fc;
+            background: rgba(14, 165, 233, 0.08);
+            border: 1px solid rgba(14, 165, 233, 0.3);
             border-radius: 50%;
-            padding: 0.6mm;
+            padding: 0.5mm;
             font-size: 8pt;
             line-height: 1;
         }
@@ -214,8 +215,10 @@
         .contact-text {
             display: inline-block;
             vertical-align: middle;
-            font-size: 8.6pt;
+            font-size: 9pt;
             line-height: 1.35;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
         }
 
         .skill-tag {
@@ -339,127 +342,127 @@
 </head>
 
 <body>
-    <div class="page">
+<div class="page">
 
-        <div class="sidebar">
-            <div class="sidebar-content">
+    <div class="sidebar">
+        <div class="sidebar-content">
 
-                <div th:if="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}" class="profile-pic-container">
-                    <div class="profile-pic-outer">
-                        <div class="profile-pic-wrapper">
-                            <div class="profile-pic-fill" role="img" aria-label="Photo de profil"
-                                th:style="|background-image: url('${profile.photoUrl}');|"></div>
-                        </div>
+            <div th:if="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}" class="profile-pic-container">
+                <div class="profile-pic-outer">
+                    <div class="profile-pic-wrapper">
+                        <div class="profile-pic-fill" role="img" aria-label="Photo de profil"
+                             th:style="|background-image: url('${profile.photoUrl}');|"></div>
                     </div>
                 </div>
+            </div>
 
-                <div th:unless="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}">
-                    <div class="initials-pic-wrapper">
-                        <div class="initials-pic" th:text="${#strings.escapeXml(
+            <div th:unless="${profile.photoUrl != null and !profile.photoUrl.isEmpty()}">
+                <div class="initials-pic-wrapper">
+                    <div class="initials-pic" th:text="${
                             (profile.firstName != null ? profile.firstName.substring(0,1) : '') +
                             (profile.lastName != null ? profile.lastName.substring(0,1) : '')
-                         )}">
-                            ID
-                        </div>
+                         }">
+                        ID
                     </div>
                 </div>
+            </div>
 
-                <div class="sb-section">
-                    <div class="sb-title">Contact</div>
+            <div class="sb-section">
+                <div class="sb-title">Contact</div>
 
-                    <div class="contact-list">
-                        <div class="contact-row" th:if="${profile.email}">
-                            <span class="contact-icon" aria-hidden="true">@</span>
-                            <span class="contact-text" th:text="${#strings.escapeXml(profile.email)}">email</span>
-                        </div>
+                <div class="contact-list">
+                    <div class="contact-row" th:if="${profile.email}">
+                        <span class="contact-icon" aria-hidden="true">@</span>
+                        <span class="contact-text" th:text="${profile.email}">email</span>
+                    </div>
 
-                        <div class="contact-row" th:if="${profile.phone}">
-                            <span class="contact-icon" aria-hidden="true">T</span>
-                            <span class="contact-text" th:text="${#strings.escapeXml(profile.phone)}">phone</span>
-                        </div>
+                    <div class="contact-row" th:if="${profile.phone}">
+                        <span class="contact-icon" aria-hidden="true">T</span>
+                        <span class="contact-text" th:text="${profile.phone}">phone</span>
+                    </div>
 
-                        <div class="contact-row" th:if="${profile.city}">
-                            <span class="contact-icon" aria-hidden="true">L</span>
-                            <span class="contact-text" th:text="${#strings.escapeXml(profile.city)}">city</span>
-                        </div>
+                    <div class="contact-row" th:if="${profile.city}">
+                        <span class="contact-icon" aria-hidden="true">L</span>
+                        <span class="contact-text" th:text="${profile.city}">city</span>
+                    </div>
 
-                        <div class="contact-row" th:if="${profile.linkedIn}">
-                            <span class="contact-icon" aria-hidden="true">in</span>
-                            <span class="contact-text" th:text="${#strings.escapeXml(profile.linkedIn)}">linkedin</span>
-                        </div>
+                    <div class="contact-row" th:if="${profile.linkedIn}">
+                        <span class="contact-icon" aria-hidden="true">in</span>
+                        <span class="contact-text" th:text="${profile.linkedIn}">linkedin</span>
+                    </div>
 
-                        <div class="contact-row" th:if="${profile.portfolio}">
-                            <span class="contact-icon" aria-hidden="true">W</span>
-                            <span class="contact-text" th:text="${#strings.escapeXml(profile.portfolio)}">web</span>
-                        </div>
+                    <div class="contact-row" th:if="${profile.portfolio}">
+                        <span class="contact-icon" aria-hidden="true">W</span>
+                        <span class="contact-text" th:text="${profile.portfolio}">web</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="sb-section">
-                    <div class="sb-title">Compétences</div>
-                    <div th:if="${profile.technologies}">
+            <div class="sb-section">
+                <div class="sb-title">Compétences</div>
+                <div th:if="${profile.technologies}">
                         <span th:each="tech : ${profile.technologies}" class="skill-tag"
-                            th:text="${#strings.escapeXml(tech)}">Java</span>
-                    </div>
+                              th:text="${tech}">Java</span>
                 </div>
-
-            </div>
-        </div>
-
-        <div class="main-content">
-
-            <div class="name-title">
-                <span th:text="${#strings.escapeXml(profile.firstName)}">Prénom</span>
-                <span class="name-highlight" th:text="${#strings.escapeXml(profile.lastName)}">Nom</span>
-            </div>
-
-            <div class="job-title" th:text="${#strings.escapeXml(profile.title)}">
-                Développeur Full Stack
-            </div>
-
-            <div class="summary-box" th:text="${#strings.escapeXml(profile.summary)}">
-                Résumé professionnel...
-            </div>
-
-            <h2 class="section-title">Expériences Professionnelles</h2>
-
-            <div class="timeline-container">
-                <div th:each="exp : ${experiences}" class="exp-item">
-
-                    <div class="exp-header">
-                        <span class="exp-date-badge">
-                            <span th:text="${#strings.escapeXml(exp.startDate)}">2020</span>
-                            <span th:if="${exp.endDate}">
-                                - <span th:text="${#strings.escapeXml(exp.endDate)}">2022</span>
-                            </span>
-                            <span th:unless="${exp.endDate}"> - Présent</span>
-                        </span>
-                        <span class="exp-role" th:text="${#strings.escapeXml(exp.title)}">Role</span>
-                    </div>
-
-                    <div class="exp-company" th:text="${#strings.escapeXml(exp.company)}">Entreprise</div>
-
-                    <div class="exp-desc" th:text="${#strings.escapeXml(exp.description)}">
-                        Description...
-                    </div>
-
-                    <div class="tech-stack-row" th:if="${exp.technologies}">
-                        <span th:each="t : ${exp.technologies}" class="tech-pill"
-                            th:text="${#strings.escapeXml(t)}">#Tech</span>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="footer">
-                CV généré automatiquement par Portfolio App •
-                <span th:text="${#strings.escapeXml(#temporals.format(T(java.time.LocalDate).now(), 'dd MMM yyyy'))}">
-                    Date
-                </span>
             </div>
 
         </div>
     </div>
+
+    <div class="main-content">
+
+        <div class="name-title">
+            <span th:text="${profile.firstName}">Prénom</span>
+            <span class="name-highlight" th:text="${profile.lastName}">Nom</span>
+        </div>
+
+        <div class="job-title" th:text="${profile.title}">
+            Développeur Full Stack
+        </div>
+
+        <div class="summary-box" th:text="${profile.summary}">
+            Résumé professionnel...
+        </div>
+
+        <h2 class="section-title">Expériences Professionnelles</h2>
+
+        <div class="timeline-container">
+            <div th:each="exp : ${experiences}" class="exp-item">
+
+                <div class="exp-header">
+                        <span class="exp-date-badge">
+                            <span th:text="${exp.startDate}">2020</span>
+                            <span th:if="${exp.endDate}">
+                                - <span th:text="${exp.endDate}">2022</span>
+                            </span>
+                            <span th:unless="${exp.endDate}"> - Présent</span>
+                        </span>
+                    <span class="exp-role" th:text="${exp.title}">Role</span>
+                </div>
+
+                <div class="exp-company" th:text="${exp.company}">Entreprise</div>
+
+                <div class="exp-desc" th:text="${exp.description}">
+                    Description...
+                </div>
+
+                <div class="tech-stack-row" th:if="${exp.technologies}">
+                        <span th:each="t : ${exp.technologies}" class="tech-pill"
+                              th:text="${t}">#Tech</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            CV généré automatiquement par Portfolio App •
+            <span th:text="${#temporals.format(T(java.time.LocalDate).now(), 'dd MMM yyyy')}">
+                    Date
+                </span>
+        </div>
+
+    </div>
+</div>
 </body>
 
 </html>
